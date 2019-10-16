@@ -1,0 +1,207 @@
+*{
+  box-sizing: border-box;
+}
+body{
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pre-game{
+  height: 900px;
+  width: 900px;
+  background-color: darkgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.game{
+  position: absolute;
+  height: 900px;
+  width: 900px;
+  background-color: darkgreen;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  visibility: hidden;
+}
+  .extractions-container{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    border: 1px solid black;
+  }
+    .extracted-numbers{
+      width: 75%;
+      height: 150px;
+      display: flex;
+      flex-wrap: wrap;
+      border: 1px solid black;
+    }
+    .new-extraction-container{
+      width: 25%;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+    }
+    .new-extraction{
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid red;
+    }
+  .human-tickets-container{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid blue;
+  }
+    .human-tickets-container .title{
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .human-tickets-container .human-tickets{
+      width: 100%;
+      height: 200px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+    }
+      .human-ticket{
+        width: 30%;
+        height: 150px;
+        border: 1px solid yellow;
+      }
+
+  .computer-tickets-container{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid yellow;
+  }
+    .computer-tickets-container .title{
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .computer-tickets-container .computer-tickets{
+      width: 100%;
+      height: 450px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+    }
+      .computer-ticket{
+        width: 22.5%;
+        height: 100px;
+        border: 1px solid yellow;
+      }
+
+      .human-ticket .header, .computer-ticket .header{
+        width: 100%;
+        height: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .human-ticket .ticket-body, .computer-ticket .ticket-body{
+        width: 100%;
+        height: 85%;
+      }
+      .human-ticket .ticket-body .ticket-number, .computer-ticket .ticket-body .ticket-number{
+        width: 20%;
+        height: 33.3%;
+      }
+
+.title{
+  display: flex;
+  font-size: 36px;
+  height: 75px;
+  width: 100%;
+  background-color: darkblue;
+}
+  .title div{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .title div .activator{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border: 1px solid red;
+    border-radius: 10px;
+    height: 65%;
+    width: 35%;
+    background-color: white;
+  }
+  .hide-activator{
+    visibility: hidden;
+  }
+.errors{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: darkgreen;
+}
+.tickets-container{
+  height: 775px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ticket{
+  width: 30%;
+  height: 125px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+  .ticket-header{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ticket-body{
+    width: 100%;
+    height: 105px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+    .ticket-number{
+      height: 35px;
+      width: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid red;
+    }
+.selected{
+  background-color: white;
+  transform: scale(1.1);
+}
