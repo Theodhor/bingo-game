@@ -40,6 +40,16 @@ body{
       flex-wrap: wrap;
       border: 1px solid black;
     }
+    .extracted-number{
+      height: 25px;
+      width: 25px;
+      margin: 2px 3px;
+      border-radius: 50%;
+      border: 1px solid red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .new-extraction-container{
       width: 25%;
       height: 150px;
@@ -201,6 +211,10 @@ body{
       justify-content: center;
       border: 1px solid red;
     }
+    .catched{
+      background-color: yellow;
+    }
+
 .selected{
   background-color: white;
   transform: scale(1.1);

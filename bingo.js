@@ -1,8 +1,12 @@
 const ticketsStatus = [];
 let ticketSelected = 0;
 let ticketSerial = 1234321;
-const humanTciekts = [];
+let max = 90;
+let gameOver = false;
+const winningTickets =[];
+const humanTickets = [];
 const computerTickets = [];
+const analyzedTickets = [];
 function reduceTikcet(){
   if(ticketSelected>0){
     ticketSelected--;
@@ -13,13 +17,13 @@ function increaseTicket(){
     ticketSelected++;
   }
 }
-const createNumbers = function(){
+function createNumbers(){
   const numbers = [];
   for(let a=1; a<91; a++){
     numbers.push(a);
   }
   return numbers;
-};
+}
 const generateTicket = function(){
   let max = 90;
   const ticket =[];
@@ -33,7 +37,7 @@ const generateTicket = function(){
   ticket.sort((a,b) => (a-b));
   return ticket;
 };
-
+const extractionsArray = createNumbers();
 function generateTicketsPre(target){
   for(let a=0; a<15; a++){
     const element = {};
@@ -99,6 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const game = document.querySelector('.game');
   const humanTicketsContainer = document.querySelector('.human-tickets');
   const computerTicketsContainer = document.querySelector('.computer-tickets');
+  const extractedNumbers = document.querySelector('.extracted-numbers');
+  const extraction = document.querySelector('.new-extraction');
+  let analyzedDomTickets;
 
   generateTicketsPre(ticketsContainer);
   const preTicketsArray = document.querySelectorAll('.ticket');
@@ -125,33 +132,105 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let a=0; a<15; a++){
       const domTicket = generatePlayTicket(a,ticketsStatus[a].status,ticketsStatus);
       if (ticketsStatus[a].status) {
-        humanTciekts.push(ticketsStatus[a]);
+        humanTickets.push(ticketsStatus[a]);
         humanTicketsContainer.appendChild(domTicket);
       } else {
         computerTickets.push(ticketsStatus[a]);
         computerTicketsContainer.appendChild(domTicket);
       }
     }
+    analyzedTickets.push(humanTickets);
+    analyzedTickets.push(computerTickets);
   }
+  let domHumanTickets;
+  let domComputerTickets;
 
-  activator.addEventListener('click', function(){
-    function assignPlayers(){
-      for(let a=0; a<15; a++){
-        const element = {};
-        element.ticket = ticketsStatus[a];
-        if(ticketsStatus[a].status === true){
-          element.owner = 'Human player';
-          humanTciekts.push(element);
-        } else {
-          element.owner = 'Computer player';
-          computerTickets.push(element);
+  function scanTicket(a,b,extracted){
+    for(let c=0; c<15; c++){
+      if(extracted === parseInt(analyzedDomTickets[a][b][c].innerText)){
+
+        analyzedDomTickets[a][b][c].classList.add('catched');
+        analyzedTickets[a][b].catched++;
+
+        if(analyzedTickets[a][b].catched===15){
+          gameOver = true;
         }
       }
     }
-    assignPlayers();
+  }
+
+  function scanTicketsArray(array, extracted){
+    for(let a=0; a<array.length; a++){
+      for(let b=0; b<array[a].length; b++){
+        scanTicket(a,b,extracted);
+        assignWinningTickets(analyzedTickets[a][b].ticket,analyzedTickets[a][b].catched,a,b);
+      }
+    }
+  }
+
+  function assignWinningTickets(ticket, counter,a,b){
+    const result = {};
+    if(counter === 15){
+      result.ticket = ticket;
+      result.coord = [a,b];
+    }
+    winningTickets.push(result);
+  }
+  function bingo(array){
+    const extractedIndex = Math.floor(Math.random() * max);
+    const extracted = extractionsArray[extractedIndex];
+
+    extraction.innerText = extracted;
+
+    const domExtracted = document.createElement('div');
+    domExtracted.classList.add('extracted-number');
+    domExtracted.innerText = extracted;
+
+    extractedNumbers.appendChild(domExtracted);
+
+    scanTicketsArray(array,extracted);
+
+
+    extractionsArray.splice(extractedIndex,1);
+    max--;
+
+  }
+
+
+
+  activator.addEventListener('click', function(){
     assignPlayTickets();
     preGame.style.visibility = 'hidden';
     game.style.visibility = 'visible';
-    console.log(humanTciekts,computerTickets);
+    domHumanTickets = document.querySelectorAll('.human-ticket .ticket-body');
+    domComputerTickets = document.querySelectorAll('.computer-ticket .ticket-body');
+    function assignDom(array){
+      const result = [];
+      for(let a=0; a<array.length; a++){
+        result.push(array[a].children);
+      }
+      return result;
+    }
+    function assignDomNumbers(a,b){
+      const result =[];
+      result.push(assignDom(a));
+      result.push(assignDom(b));
+      return result;
+    }
+    analyzedDomTickets = assignDomNumbers(domHumanTickets,domComputerTickets);
+
+
+    const runGame = function(){
+      const interval = setInterval(function() {
+        bingo(analyzedDomTickets);
+        if (gameOver) clearInterval(interval);
+      }, 200);
+      return interval();
+    };
+    setTimeout(function() {
+      runGame();
+    }, 1000);
+
   });
+
 });
